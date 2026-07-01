@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave a Review | Fred Electrical, Richmond</title>
+<meta name="description" content="Leave a review for Fred Electrical — your local registered electrician in Richmond, Tasman.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .review-wrap{min-height:100svh;display:grid;place-items:center;padding:120px 24px 60px;position:relative;background:var(--ink)}
+  .review-wrap::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(245,179,1,.16),transparent 55%)}
+  .review-card{position:relative;z-index:1;background:var(--paper);border-radius:20px;max-width:620px;width:100%;padding:52px 44px;text-align:center;box-shadow:0 40px 90px -40px rgba(0,0,0,.6)}
+  .review-card .bolt{width:58px;height:58px;border-radius:14px;background:var(--accent);display:grid;place-items:center;margin:0 auto 22px}
+  .review-card .bolt svg{width:30px;height:30px}
+  .review-card h1{font-size:clamp(30px,5vw,44px);margin-bottom:14px}
+  .review-card p.lead{color:var(--muted);margin-bottom:36px;font-size:17px}
+  .star-rate{display:flex;justify-content:center;gap:10px;margin-bottom:34px;direction:rtl}
+  .star-rate input{display:none}
+  .star-rate label{cursor:pointer;color:#d8d5cd;transition:transform .15s,color .2s}
+  .star-rate label svg{width:46px;height:46px}
+  .star-rate label:hover,.star-rate label:hover ~ label,
+  .star-rate input:checked ~ label{color:var(--accent)}
+  .star-rate label:hover{transform:scale(1.14)}
+  .rate-hint{color:var(--muted);font-size:14px;min-height:22px;margin-bottom:26px;font-weight:600}
+  .back-home{display:inline-block;margin-top:26px;color:var(--muted);font-size:14px;font-weight:600}
+  .back-home:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="review-wrap">
+  <div class="review-card">
+    <div class="bolt"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="#14161A"/></svg></div>
+    <h1>How did we do?</h1>
+    <p class="lead">Your feedback helps Fred Electrical keep doing right by Richmond locals. Tap a star to get started.</p>
+
+    <div class="star-rate" id="stars">
+      <input type="radio" name="rate" id="s5" value="5"><label for="s5" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></label>
+      <input type="radio" name="rate" id="s4" value="4"><label for="s4" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></label>
+      <input type="radio" name="rate" id="s3" value="3"><label for="s3" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></label>
+      <input type="radio" name="rate" id="s2" value="2"><label for="s2" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></label>
+      <input type="radio" name="rate" id="s1" value="1"><label for="s1" aria-label="1 star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></label>
+    </div>
+    <div class="rate-hint" id="hint">Select a rating above</div>
+
+    <a class="back-home" href="index.html">&larr; Back to home</a>
+  </div>
+</div>
+
+<script>
+  // 4-5 stars -> Google review; 1-3 stars -> private feedback form
+  var GOOGLE_REVIEW_URL = "https://g.page/r/PLACEHOLDER";
+  var hint = document.getElementById('hint');
+  var hints = {
+    5:"Fantastic — thank you! Sending you to Google…",
+    4:"Great to hear! Sending you to Google…",
+    3:"Thanks — we'd like to hear more.",
+    2:"Sorry to hear that — tell us what happened.",
+    1:"We want to make this right — tell us more."
+  };
+  document.querySelectorAll('.star-rate input').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      var v = parseInt(this.value,10);
+      hint.textContent = hints[v] || '';
+      setTimeout(function(){
+        if (v >= 4){ window.location.href = GOOGLE_REVIEW_URL; }
+        else { window.location.href = 'private.html?rating=' + v; }
+      }, 650);
+    });
+  });
+</script>
+</body>
+</html>

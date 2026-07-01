@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Feedback | Fred Electrical, Richmond</title>
+<meta name="description" content="Share your feedback with Fred Electrical so we can put things right.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .fb-wrap{min-height:100svh;display:grid;place-items:center;padding:120px 24px 60px;position:relative;background:var(--ink)}
+  .fb-wrap::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(245,179,1,.14),transparent 55%)}
+  .fb-card{position:relative;z-index:1;background:var(--paper);border-radius:20px;max-width:600px;width:100%;padding:48px 42px;box-shadow:0 40px 90px -40px rgba(0,0,0,.6)}
+  .fb-card .bolt{width:54px;height:54px;border-radius:13px;background:var(--accent);display:grid;place-items:center;margin-bottom:20px}
+  .fb-card .bolt svg{width:28px;height:28px}
+  .fb-card h1{font-size:clamp(28px,4.6vw,40px);margin-bottom:12px}
+  .fb-card p.lead{color:var(--muted);margin-bottom:28px}
+  .rating-show{display:flex;gap:4px;margin-bottom:24px}
+  .rating-show svg{width:24px;height:24px;color:#d8d5cd}
+  .rating-show svg.on{color:var(--accent)}
+  .success{display:none;text-align:center;padding:14px 0}
+  .success.show{display:block}
+  .success .ok{width:74px;height:74px;border-radius:50%;background:rgba(245,179,1,.15);display:grid;place-items:center;margin:0 auto 22px}
+  .success .ok svg{width:38px;height:38px;color:var(--accent)}
+  .success h2{font-size:30px;margin-bottom:12px}
+  .success p{color:var(--muted);margin-bottom:26px}
+  .back-home{display:inline-block;margin-top:8px;color:var(--muted);font-size:14px;font-weight:600}
+  .back-home:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="fb-wrap">
+  <div class="fb-card">
+    <div id="formView">
+      <div class="bolt"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="#14161A"/></svg></div>
+      <h1>Tell us what happened</h1>
+      <p class="lead">Thanks for the honesty. Fred reads every message himself and will do what he can to put it right.</p>
+      <div class="rating-show" id="ratingShow" aria-label="Your rating"></div>
+      <form id="fbForm" action="https://formsubmit.co/hello@fredelectrical.co.nz" method="POST">
+        <input type="hidden" name="_subject" value="Private feedback — Fred Electrical website">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" id="ratingField" name="Rating" value="">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="Name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="Email" placeholder="you@email.com" required>
+        </div>
+        <div class="field">
+          <label for="feedback">Your feedback</label>
+          <textarea id="feedback" name="Feedback" placeholder="What let us down, and how can we make it right?" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%">Send Feedback</button>
+      </form>
+      <a class="back-home" href="index.html" style="margin-top:20px">&larr; Back to home</a>
+    </div>
+
+    <div class="success" id="successView">
+      <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg></div>
+      <h2>Thanks for letting us know</h2>
+      <p>Your feedback has gone straight to Fred. We'll be in touch to make things right.</p>
+      <a class="btn btn-dark" href="index.html">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Pre-fill rating from URL
+  var params = new URLSearchParams(window.location.search);
+  var rating = parseInt(params.get('rating'), 10);
+  if (!rating || rating < 1 || rating > 5) rating = 3;
+  document.getElementById('ratingField').value = rating;
+  var show = document.getElementById('ratingShow');
+  for (var i = 1; i <= 5; i++) {
+    var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','currentColor');
+    if (i <= rating) s.setAttribute('class','on');
+    s.innerHTML = '<path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/>';
+    show.appendChild(s);
+  }
+
+  // AJAX submit -> success state (no reCAPTCHA, no redirect)
+  var form = document.getElementById('fbForm');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type=submit]');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+      .then(function () { done(); })
+      .catch(function () { done(); });
+  });
+  function done() {
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').classList.add('show');
+  }
+</script>
+</body>
+</html>
