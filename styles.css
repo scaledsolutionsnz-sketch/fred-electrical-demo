@@ -316,3 +316,23 @@ footer{background:#0F1114;color:#fff;padding:64px 0 30px}
   .reveal{opacity:1;transform:none}
   .hero-slide{transition:none}
 }
+
+/* ===== Fred logo + new sections (2026 update) ===== */
+.brand-logo{height:46px;width:auto;display:block;background:#fff;padding:7px 11px;border-radius:10px;box-shadow:0 6px 18px -10px rgba(0,0,0,.4)}
+.nav.scrolled .brand-logo{height:40px}
+.foot-brand .brand-logo{height:52px;margin-bottom:16px}
+.intro-mark .brand-logo{height:120px;margin:0 auto 20px;padding:14px 18px}
+.video-embed{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.energy-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.energy-grid .energy-media img{width:100%;border-radius:var(--radius);display:block}
+.energy-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.energy-chips span{background:var(--ink-3);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:8px 15px;font-size:13px;font-weight:600}
+.rev-source{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted)}
+.rev-source .score{font-family:'Anton',sans-serif;font-size:30px;color:var(--ink);line-height:1}
+.rev-source .gstars{color:var(--accent);letter-spacing:1px}
+.rev-source a{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.rev-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.cmap{margin-top:18px;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.14)}
+.cmap iframe{width:100%;height:220px;border:0;display:block;filter:grayscale(.3)}
+@media(max-width:860px){.energy-grid{grid-template-columns:1fr;gap:26px}}
